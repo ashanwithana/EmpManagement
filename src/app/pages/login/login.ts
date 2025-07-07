@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserModel } from '../../model/user.model';
-import { Employee } from '../../service/employeeService/employee';
 import { Router } from '@angular/router';
 import { IResponseModel } from '../../model/response.model';
+import { EmployeeService } from '../../service/employeeService/employee';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,7 @@ export class Login {
 
   loginObj: UserModel = new UserModel()
 
-  employeeSerivce = inject(Employee)
+  employeeSerivce = inject(EmployeeService)
   router = inject(Router)
 
   login() {
