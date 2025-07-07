@@ -4,7 +4,6 @@ import { IResponseModel } from '../../model/response.model';
 import { IEmployeeList } from '../../model/employee.model';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-employee',
   imports: [CommonModule],
@@ -12,10 +11,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './employee.css'
 })
 export class Employee implements OnInit {
-
-  employeeSerivce = inject(EmployeeService)
-
-  empList: IEmployeeList[] = []
+  employeeSerivce = inject(EmployeeService);
+  empList: IEmployeeList[] = [];
 
   ngOnInit(): void {
     this.getEmployees();
@@ -24,7 +21,6 @@ export class Employee implements OnInit {
   getEmployees() {
     this.employeeSerivce.getAllEmployees().subscribe({
       next: (res: IResponseModel) => {
-        console.log('Employee list:', res.data);
         this.empList = res.data;
       },
       error: (err) => {
@@ -32,5 +28,5 @@ export class Employee implements OnInit {
       }
     });
   }
-
 }
+
