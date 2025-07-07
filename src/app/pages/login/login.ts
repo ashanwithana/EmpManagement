@@ -22,7 +22,7 @@ export class Login {
     this.employeeSerivce.onLogin(this.loginObj).subscribe({
       next: (res: IResponseModel) => {
         if (res.result) {
-          localStorage.setItem('employeeId', JSON.stringify(res.data))
+          localStorage.setItem('employee', JSON.stringify(res.data))
           this.router.navigateByUrl('/dashboard')
         }
         else {
