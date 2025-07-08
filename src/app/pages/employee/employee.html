@@ -5,7 +5,7 @@
             <p>View, add, and manage your organization's employees.</p>
         </div>
         <div class="header-actions">
-            <button class="add-employee-btn">
+            <button class="add-employee-btn" (click)="openModal()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -75,5 +75,91 @@
                 </tbody>
             </table>
         </div>
+    </div>
+</div>
+
+<div class="modal-overlay visible modal" #employeeModal>
+    <div class="modal-panel">
+        <header class="modal-header">
+            <h2 class="modal-title">Create New Employee</h2>
+            <button class="modal-close-button" aria-label="Close modal" (click)="closeModal()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </header>
+
+        <form class="modal-body">
+            <div class="form-grid">
+                <div class="form-group grid-col-span-2">
+                    <label for="employeeName">Full Name</label>
+                    <input type="text" id="employeeName" placeholder="e.g., John Doe" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="emailId">Company Email</label>
+                    <input type="email" id="emailId" placeholder="john.doe@company.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactNo">Contact Number</label>
+                    <input type="tel" id="contactNo" placeholder="(+1) 555-0101">
+                </div>
+
+                <div class="form-group">
+                    <label for="deptId">Department</label>
+                    <div class="select-wrapper">
+                        <select id="deptId" required>
+                            <option value="" disabled selected>Select a department</option>
+                            @for (item of departments(); track $index) {
+                            <option [value]="item.deptId">{{item.deptName}}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <div class="select-wrapper">
+                        <select id="role" required>
+                            <option value="" disabled selected>Select a role</option>
+                            @for (item of roleList(); track $index) {
+                            <option [value]="item">{{item}}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <fieldset class="form-group grid-col-span-2">
+                    <legend>Gender</legend>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="genderMale" name="gender" value="Male" checked>
+                            <label for="genderMale">Male</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="genderFemale" name="gender" value="Female">
+                            <label for="genderFemale">Female</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="genderOther" name="gender" value="Other">
+                            <label for="genderOther">Other</label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-group grid-col-span-2">
+                    <label for="password">Set Temporary Password</label>
+                    <input type="password" id="password" placeholder="Min. 8 characters" required>
+                </div>
+            </div>
+        </form>
+
+        <footer class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Employee</button>
+        </footer>
     </div>
 </div>

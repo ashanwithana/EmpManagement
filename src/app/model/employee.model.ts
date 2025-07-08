@@ -3,7 +3,7 @@ export class EmployeeModel {
     employeeName: string
     contactNo: string
     emailId: string
-    deptId: number
+    deptId: string
     password: string
     gender: string
     role: string
@@ -13,7 +13,7 @@ export class EmployeeModel {
         this.employeeName = ''
         this.contactNo = ''
         this.emailId = ''
-        this.deptId = 0
+        this.deptId = ''
         this.password = ''
         this.gender = ''
         this.role = ''
