@@ -95,23 +95,26 @@
             <div class="form-grid">
                 <div class="form-group grid-col-span-2">
                     <label for="employeeName">Full Name</label>
-                    <input type="text" id="employeeName" placeholder="e.g., John Doe" required>
+                    <input type="text" [(ngModel)]="employeeObj.employeeName" name="employeeName" id="employeeName"
+                        placeholder="e.g., John Doe" required>
                 </div>
 
                 <div class="form-group">
                     <label for="emailId">Company Email</label>
-                    <input type="email" id="emailId" placeholder="john.doe@company.com" required>
+                    <input type="email" [(ngModel)]="employeeObj.emailId" name="emailId" id="emailId"
+                        placeholder="john.doe@company.com" required>
                 </div>
 
                 <div class="form-group">
                     <label for="contactNo">Contact Number</label>
-                    <input type="tel" id="contactNo" placeholder="(+1) 555-0101">
+                    <input type="tel" [(ngModel)]="employeeObj.contactNo" name="contactNo" id="contactNo"
+                        placeholder="(+94) 123456789">
                 </div>
 
                 <div class="form-group">
                     <label for="deptId">Department</label>
                     <div class="select-wrapper">
-                        <select id="deptId" required>
+                        <select id="deptId" [(ngModel)]="employeeObj.deptId" name="deptId" required>
                             <option value="" disabled selected>Select a department</option>
                             @for (item of departments(); track $index) {
                             <option [value]="item.deptId">{{item.deptName}}</option>
@@ -123,7 +126,7 @@
                 <div class="form-group">
                     <label for="role">Role</label>
                     <div class="select-wrapper">
-                        <select id="role" required>
+                        <select id="role" [(ngModel)]="employeeObj.role" name="role" required>
                             <option value="" disabled selected>Select a role</option>
                             @for (item of roleList(); track $index) {
                             <option [value]="item">{{item}}</option>
@@ -136,30 +139,34 @@
                     <legend>Gender</legend>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="genderMale" name="gender" value="Male" checked>
+                            <input type="radio" id="genderMale" name="gender" [(ngModel)]="employeeObj.gender"
+                                value="Male" />
                             <label for="genderMale">Male</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="genderFemale" name="gender" value="Female">
+                            <input type="radio" id="genderFemale" name="gender" [(ngModel)]="employeeObj.gender"
+                                value="Female" />
                             <label for="genderFemale">Female</label>
                         </div>
                         <div class="radio-option">
-                            <input type="radio" id="genderOther" name="gender" value="Other">
+                            <input type="radio" id="genderOther" name="gender" [(ngModel)]="employeeObj.gender"
+                                value="Other" />
                             <label for="genderOther">Other</label>
                         </div>
                     </div>
                 </fieldset>
 
+
                 <div class="form-group grid-col-span-2">
                     <label for="password">Set Temporary Password</label>
-                    <input type="password" id="password" placeholder="Min. 8 characters" required>
+                    <input type="password" [(ngModel)]="employeeObj.password" name="password" id="password" placeholder="Min. 8 characters" required>
                 </div>
             </div>
         </form>
 
         <footer class="modal-footer">
             <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-            <button type="submit" class="btn btn-primary">Save Employee</button>
+            <button type="submit" class="btn btn-primary" (click)="addEmployee()">Save Employee</button>
         </footer>
     </div>
 </div>

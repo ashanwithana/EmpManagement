@@ -1,13 +1,14 @@
 import { Component, effect, ElementRef, inject, signal, ViewChild } from '@angular/core';
 import { EmployeeService } from '../../service/employeeService/employee';
 import { IResponseModel } from '../../model/response.model';
-import { IEmployeeList } from '../../model/employee.model';
+import { EmployeeModel, IEmployeeList } from '../../model/employee.model';
 import { CommonModule } from '@angular/common';
 import { IDepartment } from '../../model/department.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-employee',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './employee.html',
   styleUrl: './employee.css'
 })
@@ -18,6 +19,8 @@ export class Employee {
   departments = signal<IDepartment[]>([]);
 
   roleList = signal<any[]>([]);
+
+  employeeObj: EmployeeModel = new EmployeeModel()
 
   @ViewChild('employeeModal') employeeModel!: ElementRef
 
@@ -49,6 +52,22 @@ export class Employee {
     if (this.employeeModel) {
       this.employeeModel.nativeElement.style.display = 'none'
     }
+  }
+
+  addEmployee() {
+    this.employeeService.addEmployee(this.employeeObj).subscribe({
+      next: (res: IResponseModel) => {
+        if (res.result) {
+          alert('Employee added successfully');
+          this.closeModal();
+        }else{
+          alert('Failed to add employee: ' + res.message);
+        }
+      },
+      error: (err) => {
+        alert('Failed to add employee: ' + err.message);
+      },
+    })
   }
 }
 
