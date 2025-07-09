@@ -6,7 +6,8 @@
         </div>
         <div class="header-actions">
             <button class="request-leave-btn" (click)="openModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
@@ -28,39 +29,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Vacation</td>
-                        <td>Aug 15, 2025 - Aug 18, 2025</td>
-                        <td>4</td>
-                        <td><span class="status-badge status-approved">Approved</span></td>
+
+                    <tr *ngFor="let item of leaveList()">
+                        <td>{{item.leaveType}}</td>
+                        <td>{{item.fromDate}} - {{item.toDate}}</td>
+                        <td>{{item.noOfDays}}</td>
+                        <td>@if (item.isApproved == null) {
+                            <span class="badge bg-warning">Pending</span>
+                            }
+                            @else if (item.isApproved == true) {
+                            <span class="badge bg-success">Approved</span>
+                            }
+                            @else if (item.isApproved == false) {
+                            <span class="badge bg-danger">Rejected</span>
+                            }
+                        </td>
                         <td>
                             <div class="actions-cell">
-                                <button class="action-button" aria-label="View Details" disabled><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+                                <button class="action-button" aria-label="View Details">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Sick Leave</td>
-                        <td>Jul 21, 2025</td>
-                        <td>1</td>
-                        <td><span class="status-badge status-pending">Pending</span></td>
-                        <td>
-                            <div class="actions-cell">
-                                <button class="action-button action-cancel" aria-label="Cancel Request"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Personal</td>
-                        <td>May 02, 2025</td>
-                        <td>1</td>
-                        <td><span class="status-badge status-rejected">Rejected</span></td>
-                        <td>
-                             <div class="actions-cell">
-                                <button class="action-button" aria-label="View Details" disabled><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
-                            </div>
-                        </td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -72,41 +69,48 @@
         <header class="modal-header">
             <h2 class="modal-title">Request New Leave</h2>
             <button class="modal-close-button" aria-label="Close modal" (click)="closeModal()">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
         </header>
 
-        <form class="modal-body">
+        <form class="modal-body" [formGroup]="leaveForm">
             <div class="form-grid">
                 <div class="form-group grid-col-span-2">
                     <label for="leaveType">Leave Type</label>
                     <div class="select-wrapper">
-                        <select id="leaveType" required>
+                        <select formControlName="leaveType" id="leaveType" required>
                             <option value="" disabled selected>Select a type of leave</option>
                             <option value="Vacation">Vacation</option>
                             <option value="Sick Leave">Sick Leave</option>
-                            <option value="Personal">Personal Day</option>
-                            <option value="Unpaid">Unpaid Leave</option>
+                            <option value="Personal Leave">Personal Day</option>
+                            <option value="Unpaid Leave">Unpaid Leave</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="fromDate">From Date</label>
-                    <input type="date" id="fromDate" required>
+                    <input type="date" formControlName="fromDate" id="fromDate" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="toDate">To Date</label>
-                    <input type="date" id="toDate" required>
+                    <input type="date" formControlName="toDate" id="toDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="toDate">Number of Date</label>
+                    <input type="number" formControlName="noOfDays" id="toDate" required>
                 </div>
 
                 <div class="form-group grid-col-span-2">
                     <label for="details">Details / Reason</label>
-                    <textarea id="details" placeholder="Please provide a brief reason for your request (optional)" rows="4"></textarea>
+                    <textarea id="details" formControlName="details"
+                        placeholder="Please provide a brief reason for your request (optional)" rows="4"></textarea>
                 </div>
             </div>
         </form>
