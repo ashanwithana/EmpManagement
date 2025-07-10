@@ -3,11 +3,11 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LeaveService } from '../../service/leave/leave-service';
 import { Ileave } from '../../model/leave.model';
 import { IResponseModel } from '../../model/response.model';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-leave',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NgClass],
   templateUrl: './leave.html',
   styleUrl: './leave.css'
 })
@@ -18,6 +18,8 @@ export class Leave {
   leaveService = inject(LeaveService)
 
   leaveList = signal<Ileave[]>([]);
+
+  currentTabName: string = 'myLeaves'
 
   leaveForm: FormGroup = new FormGroup({
     leaveId: new FormControl(0),
@@ -38,12 +40,16 @@ export class Leave {
       const empData = JSON.parse(userData);
       this.leaveForm.controls['employeeId'].setValue(empData.employeeId);
     }
-    effect(()=>{
+    effect(() => {
       this.leaveService.getLeavebyEmployeeId(this.leaveForm.controls['employeeId'].value).subscribe({
         next: (res: IResponseModel) => this.leaveList.set(res.data),
         error: (err) => alert('This service is currently unavailable. Please try again later.')
       });
     })
+  }
+
+  changeTab(tabName: string) {
+    this.currentTabName = tabName
   }
 
   openModal() {

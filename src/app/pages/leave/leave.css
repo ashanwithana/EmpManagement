@@ -8,28 +8,21 @@
     --surface-background: #ffffff;
     --surface-secondary: #f9fafb;
     --border-color: #e5e7eb;
-    --border-focus: #a5b4fc;
-    --status-approved-bg: #ecfdf5;
-    --status-approved-text: #065f46;
+    --status-approved-bg: #e0f2fe;
+    --status-approved-text: #0284c7;
     --status-pending-bg: #fffbeb;
     --status-pending-text: #b45309;
     --status-rejected-bg: #fef2f2;
-    --status-rejected-text: #991b1b;
-    --action-cancel-hover: #fee2e2;
-    --action-cancel-text: #dc2626;
+    --status-rejected-text: #b91c1c;
     --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-.leave-management-container {
+.leave-dashboard-container {
     padding: 2rem;
 }
 
 .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 2rem;
-    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .header-content h2 {
@@ -45,11 +38,62 @@
     margin: 0;
 }
 
+.tab-navigation {
+    display: flex;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 2rem;
+}
+
+.tab-link {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.75rem 1rem;
+    margin-right: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-light);
+    border-bottom: 3px solid transparent;
+    transform: translateY(1px);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.tab-link:hover {
+    color: var(--text-dark);
+}
+
+.tab-link.active {
+    color: var(--primary-brand);
+    font-weight: 600;
+    border-bottom-color: var(--primary-brand);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.panel-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
 .request-leave-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.25rem;
+    padding: 0.625rem 1rem;
     background-color: var(--primary-brand);
     color: white;
     border: none;
@@ -57,7 +101,7 @@
     font-size: 0.875rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
+    transition: background-color 0.2s;
 }
 
 .request-leave-btn:hover {
@@ -109,6 +153,34 @@
     border-bottom: none;
 }
 
+.user-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.user-email {
+    font-size: 0.875rem;
+    color: var(--text-light);
+}
+
 .status-badge {
     display: inline-flex;
     align-items: center;
@@ -148,40 +220,52 @@
     transition: background-color 0.2s, color 0.2s;
 }
 
-.action-button:disabled {
-    color: #d1d5db;
-    cursor: not-allowed;
-}
-
-.action-button:not(:disabled):hover {
+.action-button:hover {
     background-color: var(--surface-secondary);
     color: var(--primary-brand);
 }
 
-.action-button.action-cancel:not(:disabled):hover {
-    background-color: var(--action-cancel-hover);
-    color: var(--action-cancel-text);
+.approval-actions {
+    display: flex;
+    gap: 0.75rem;
 }
 
-.form-group textarea {
-    width: 100%;
-    padding: 0.625rem 0.875rem;
-    border: 1px solid var(--border-color);
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
     border-radius: 0.5rem;
-    font-size: 1rem;
-    font-family: var(--font-family);
-    transition: border-color 0.2s, box-shadow 0.2s;
-    resize: vertical;
-    min-height: 80px;
+    cursor: pointer;
+    transition: background-color .2s, border-color .2s;
 }
 
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--primary-brand);
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+.btn-action.btn-approve {
+    background-color: #f0fdf4;
+    color: #166534;
+    border-color: #bbf7d0;
 }
 
-/* Reusing Modal and Form styles from previous component */
+.btn-action.btn-approve:hover {
+    background-color: #dcfce7;
+    border-color: #86efac;
+}
+
+.btn-action.btn-reject {
+    background-color: #fef2f2;
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.btn-action.btn-reject:hover {
+    background-color: #fee2e2;
+    border-color: #fca5a5;
+}
+
+/* Reusing Modal Styles */
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -192,14 +276,11 @@
     justify-content: center;
     padding: 1rem;
     z-index: 5000;
-    opacity: 0;
-    pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
 .modal-overlay.visible {
-    opacity: 1;
-    pointer-events: auto;
+    display: flex;
 }
 
 .modal-panel {
@@ -211,14 +292,7 @@
     display: flex;
     flex-direction: column;
     max-height: 90vh;
-    opacity: 0;
-    transform: scale(0.95);
     transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.modal-overlay.visible .modal-panel {
-    opacity: 1;
-    transform: scale(1);
 }
 
 .modal-header {
@@ -281,7 +355,8 @@
 }
 
 .form-group input,
-.form-group select {
+.form-group select,
+.form-group textarea {
     width: 100%;
     padding: 0.625rem 0.875rem;
     border: 1px solid var(--border-color);
@@ -292,7 +367,8 @@
 }
 
 .form-group input:focus,
-.form-group select:focus {
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: var(--primary-brand);
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
@@ -342,10 +418,6 @@
     transition: background-color 0.2s, transform 0.1s;
 }
 
-.btn:active {
-    transform: scale(0.98);
-}
-
 .btn-primary {
     background-color: var(--primary-brand);
     color: white;
@@ -365,13 +437,6 @@
     background-color: #f3f4f6;
 }
 
-@media (max-width: 768px) {
-    .page-header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-}
-
 @media (max-width: 640px) {
     .form-grid {
         grid-template-columns: 1fr;
@@ -379,16 +444,5 @@
 
     .grid-col-span-2 {
         grid-column: span 1 / span 1;
-    }
-
-    .modal-panel {
-        max-height: 95vh;
-    }
-
-    .modal-body,
-    .modal-header,
-    .modal-footer {
-        padding-left: 1rem;
-        padding-right: 1rem;
     }
 }
