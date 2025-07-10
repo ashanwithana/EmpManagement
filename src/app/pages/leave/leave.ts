@@ -33,12 +33,11 @@ export class Leave {
   })
 
   constructor() {
-    const userData = localStorage.getItem('employee')
+    const userData = localStorage.getItem('employee');
     if (userData != null) {
-      const empData = JSON.parse(userData)
+      const empData = JSON.parse(userData);
       this.leaveForm.controls['employeeId'].setValue(empData.employeeId);
     }
-
     effect(()=>{
       this.leaveService.getLeavebyEmployeeId(this.leaveForm.controls['employeeId'].value).subscribe({
         next: (res: IResponseModel) => this.leaveList.set(res.data),
@@ -46,7 +45,6 @@ export class Leave {
       });
     })
   }
-
 
   openModal() {
     if (this.employeeModel) {
