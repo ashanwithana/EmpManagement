@@ -19,6 +19,8 @@ export class Leave {
 
   leaveList = signal<Ileave[]>([]);
 
+  approveLeaveList = signal<any[]>([]);
+
   currentTabName: string = 'myLeaves'
 
   leaveForm: FormGroup = new FormGroup({
@@ -39,13 +41,20 @@ export class Leave {
     if (userData != null) {
       const empData = JSON.parse(userData);
       this.leaveForm.controls['employeeId'].setValue(empData.employeeId);
+      this.loadLeaves(empData.employeeId);
     }
-    effect(() => {
-      this.leaveService.getLeavebyEmployeeId(this.leaveForm.controls['employeeId'].value).subscribe({
-        next: (res: IResponseModel) => this.leaveList.set(res.data),
-        error: (err) => alert('This service is currently unavailable. Please try again later.')
-      });
-    })
+  }
+
+  loadLeaves(employeeId: number) {
+    this.leaveService.getLeavebyEmployeeId(employeeId).subscribe({
+      next: (res: IResponseModel) => this.leaveList.set(res.data),
+      error: () => alert('This service is currently unavailable. Please try again later.')
+    });
+
+    this.leaveService.getLeavesForApprovedBySupervisor(762).subscribe({
+      next: (res: IResponseModel) => this.approveLeaveList.set(res.data),
+      error: () => alert('This service is currently unavailable. Please try again later.')
+    });
   }
 
   changeTab(tabName: string) {
@@ -63,6 +72,16 @@ export class Leave {
       this.employeeModel.nativeElement.style.display = 'none'
     }
   }
+
+  // loadsLeavesForApproval() {
+  //   this.leaveService.getLeavesForApprovedBySupervisor(117).subscribe({
+  //     next: (res: IResponseModel) => {
+  //       this.approveLeaveList.set(res.data)
+  //     }, error: (err) => {
+
+  //     }
+  //   })
+  // }
 
   submitLeave() {
     const leaveData = this.leaveForm.value;

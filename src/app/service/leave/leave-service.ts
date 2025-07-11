@@ -15,7 +15,11 @@ export class LeaveService {
     return this.http.post<IResponseModel>('https://freeapi.miniprojectideas.com/api/EmployeeLeave/AddLeave', obj)
   }
 
-  getLeavebyEmployeeId(employeeId: number) {
+  getLeavebyEmployeeId(employeeId: number): Observable<IResponseModel> {
     return this.http.get<IResponseModel>('https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetAllLeavesByEmployeeId?id=' + employeeId)
+  }
+
+  getLeavesForApprovedBySupervisor(employeeId: number): Observable<IResponseModel> {
+    return this.http.get<IResponseModel>('https://freeapi.miniprojectideas.com/api/EmployeeLeave/GetLeavesForApprovalBySuperwiserId?id=' + employeeId);
   }
 }

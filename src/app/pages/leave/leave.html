@@ -7,8 +7,10 @@
     </header>
 
     <div class="tab-navigation">
-        <button class="tab-link" (click)="changeTab('myLeaves')" [ngClass]="currentTabName == 'myLeaves'? 'active':'' " data-tab="my-leaves-panel">My Leaves</button>
-        <button class="tab-link" (click)="changeTab('leaveRequest')" [ngClass]="currentTabName == 'leaveRequest'? 'active':'' " data-tab="leave-requests-panel">Leave
+        <button class="tab-link" (click)="changeTab('myLeaves')" [ngClass]="currentTabName == 'myLeaves'? 'active':'' "
+            data-tab="my-leaves-panel">My Leaves</button>
+        <button class="tab-link" (click)="changeTab('leaveRequest')"
+            [ngClass]="currentTabName == 'leaveRequest'? 'active':'' " data-tab="leave-requests-panel">Leave
             Requests</button>
     </div>
 
@@ -87,38 +89,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="user-cell">
-                                        <img src="https://i.pravatar.cc/40?u=a042581f4e29026704a" alt="Avatar"
-                                            class="user-avatar" />
-                                        <div class="user-details">
-                                            <span class="user-name">Alex Morgan</span>
-                                            <span class="user-email">alex.morgancompany.com</span>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>Vacation</td>
-                                <td>Aug 20, 2025 - Aug 22, 2025</td>
-                                <td>3</td>
-                                <td>
-                                    <div class="approval-actions">
-                                        <button class="btn-action btn-reject"><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                <line x1="6" y1="6" x2="18" y2="18"></line>
-                                            </svg><span>Reject</span></button>
-                                        <button class="btn-action btn-approve"><svg xmlns="http://www.w3.org/2000/svg"
-                                                width="18" height="18" viewBox="0 0 24 24" fill="none"
-                                                stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                                <polyline points="20 6 9 17 4 12"></polyline>
-                                            </svg><span>Approve</span></button>
-                                    </div>
-                                </td>
-                            </tr>
+                            @for (item of approveLeaveList(); track $index) {
+                            <td>{{item.employeeName}}</td>
+                            <td>{{item.leaveType}}</td>
+                            <td>{{item.fromDate | date: 'MMM d, y'}} - {{item.toDate | date: 'MMM d, y'}}</td>
+                            <td>{{item.noOfDays}}</td>
+                            <td>
+                                <div class="approval-actions">
+                                    <button class="btn-action btn-reject"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                                        </svg><span>Reject</span></button>
+                                    <button class="btn-action btn-approve"><svg xmlns="http://www.w3.org/2000/svg"
+                                            width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg><span>Approve</span></button>
+                                </div>
+                            </td>
+                            }
                         </tbody>
                     </table>
                 </div>
